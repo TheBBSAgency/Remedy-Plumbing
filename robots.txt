@@ -1,0 +1,5 @@
+# robots.txt for Remedy Plumbing & Heating LLC
+User-agent: *
+Allow: /
+
+Sitemap: https://remedyplumbingllc.com/sitemap.xml
