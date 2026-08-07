@@ -200,6 +200,27 @@
   .nav-cta:hover { background: var(--rx-red-deep); color: var(--white) !important; }
   .nav-cta::after { display: none; }
 
+    nav.primary .nav-item { position: relative; }
+  nav.primary .nav-top { display: inline-flex; align-items: center; gap: 5px; }
+  nav.primary .nav-top .caret { transition: transform 0.2s; margin-top: 1px; }
+  nav.primary .nav-item:hover .nav-top .caret, nav.primary .nav-item:focus-within .nav-top .caret { transform: rotate(180deg); }
+  nav.primary .nav-item::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: 22px; }
+  nav.primary .dropdown {
+    position: absolute; top: calc(100% + 18px); left: 0; min-width: 252px;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: 0 26px 50px -24px rgba(26,22,20,0.4); padding: 8px 0;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity 0.16s ease, transform 0.16s ease; z-index: 70;
+  }
+  nav.primary .nav-item:hover .dropdown, nav.primary .nav-item:focus-within .dropdown {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  nav.primary .dropdown a {
+    display: block; padding: 11px 20px; font-size: 12.5px; letter-spacing: 0.05em;
+    color: var(--ink-soft); white-space: nowrap; text-transform: uppercase;
+  }
+  nav.primary .dropdown a::after { display: none; }
+  nav.primary .dropdown a:hover { background: var(--cream-deep); color: var(--rx-red); }
   .menu-toggle { display: none; }
   .header-call { display: none; }
 
@@ -2131,6 +2152,30 @@
     }
     .header-call svg { flex-shrink: 0; }
     header.site .wrap { gap: 12px; }
+    .menu-toggle[aria-expanded="true"] { background: var(--ink); }
+    header.site.nav-open nav.primary {
+      display: flex; flex-direction: column; align-items: stretch;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(250,246,239,0.98); backdrop-filter: blur(8px);
+      border-top: 1px solid var(--rule); border-bottom: 2px solid var(--rx-red);
+      padding: 8px 28px 20px; gap: 0;
+      box-shadow: 0 24px 40px -22px rgba(26,22,20,0.35); z-index: 60;
+    }
+    header.site.nav-open nav.primary a {
+      padding: 15px 2px; font-size: 15px; border-bottom: 1px solid var(--rule); display: flex; align-items: center;
+    }
+    header.site.nav-open nav.primary a::after { display: none; }
+    header.site.nav-open nav.primary .nav-cta {
+      margin-top: 14px; justify-content: center; border-bottom: none;
+      color: var(--white) !important; padding: 14px 22px !important; border-radius: var(--radius);
+    }
+    header.site.nav-open nav.primary .nav-item { position: static; width: 100%; }
+    header.site.nav-open nav.primary .nav-top { width: 100%; justify-content: space-between; padding: 15px 2px; font-size: 15px; border-bottom: 1px solid var(--rule); }
+    header.site.nav-open nav.primary .nav-item.open .nav-top .caret { transform: rotate(180deg); }
+    header.site.nav-open nav.primary .dropdown { position: static; opacity: 1; visibility: visible; transform: none; display: none; box-shadow: none; border: none; border-radius: 0; min-width: 0; padding: 2px 0 6px; background: transparent; }
+    header.site.nav-open nav.primary .nav-item.open .dropdown { display: block; }
+    header.site.nav-open nav.primary .dropdown a { padding: 12px 2px 12px 18px; font-size: 13.5px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); text-transform: none; white-space: normal; }
+    .topbar { display: none; }
     .topbar .wrap { justify-content: center; }
     .topbar .meta { display: none; }
   }
@@ -2169,9 +2214,9 @@
       <span><span class="dot"></span> Mon–Fri 7am–5pm</span>
       <span><span class="dot"></span> Flat-Rate Pricing</span>
     </div>
-    <a href="tel:9209602133" class="phone">
+    <a href="tel:9209049964" class="phone">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Call Remedy: 920-960-2133
+      Call Remedy: 920-904-9964
     </a>
   </div>
 </div>
@@ -2187,13 +2232,26 @@
       </div>
     </a>
     <nav class="primary">
-      <a href="services.html">Services</a>
+      <div class="nav-item has-dropdown">
+        <a href="services.html" class="nav-top">Services <svg class="caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="dropdown">
+          <a href="services.html">All Services</a>
+          <a href="water-heater-replacement.html">Water Heater Replacement</a>
+          <a href="residential-plumbing.html">Residential Plumbing</a>
+          <a href="commercial-plumbing.html">Commercial Plumbing</a>
+          <a href="sump-pump-services.html">Sump Pump Services</a>
+          <a href="toilet-repair-replacement.html">Toilet Repair &amp; Replacement</a>
+          <a href="pipe-repair-leak-repair.html">Pipe &amp; Leak Repair</a>
+          <a href="garbage-disposal-services.html">Garbage Disposal</a>
+          <a href="new-construction-remodeling.html">New Construction &amp; Remodeling</a>
+        </div>
+      </div>
       <a href="about.html">About</a>
       <a href="index.html#reviews">Reviews</a>
       <a href="contact.html#area">Service Area</a>
       <a href="contact.html" class="nav-cta">Free Quote</a>
     </nav>
-    <a href="tel:9209602133" class="header-call" aria-label="Call Remedy Plumbing 920-960-2133"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>920-960-2133</span></a>
+    <a href="tel:9209049964" class="header-call" aria-label="Call Remedy Plumbing 920-904-9964"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>920-904-9964</span></a>
     <button class="menu-toggle" aria-label="Open menu">Menu</button>
   </div>
 </header>
@@ -2246,7 +2304,7 @@
       <p>We use <strong>GoHighLevel (LeadConnector)</strong> to power the contact form and the chat widget on our site. When you submit a form or send a chat message, your information is transmitted through and stored in GoHighLevel's systems before and after it reaches us. GoHighLevel processes this data under its own privacy policy.</p>
 
       <h2>5. Text Messages (SMS)</h2>
-      <p>By providing your mobile number — whether you text us at <a href="tel:9209602133">920-960-2133</a>, submit it through a form, or share it in our chat widget — you consent to receive text messages from Remedy Plumbing &amp; Heating LLC related to your service request, such as appointment scheduling, quotes, follow-ups, and account or billing notifications. Consent to receive texts is not a condition of purchasing any service.</p>
+      <p>By providing your mobile number — whether you text us at <a href="tel:9209049964">920-904-9964</a>, submit it through a form, or share it in our chat widget — you consent to receive text messages from Remedy Plumbing &amp; Heating LLC related to your service request, such as appointment scheduling, quotes, follow-ups, and account or billing notifications. Consent to receive texts is not a condition of purchasing any service.</p>
       <p>Message frequency varies. Standard message and data rates from your carrier may apply. Reply <strong>STOP</strong> at any time to opt out of text messages, or <strong>HELP</strong> for assistance. Opting out of texts will not affect your ability to reach us by phone.</p>
       <p>We do not sell, rent, or share your mobile opt-in information or phone number with third parties or affiliates for their own marketing purposes. Text-messaging opt-in data is not shared with anyone except the messaging providers (such as GoHighLevel) needed to deliver the messages you requested.</p>
       <p>If you text us, we may save the conversation history and any photos you send to help complete your service request.</p>
@@ -2255,7 +2313,7 @@
       <p>Our website may use minimal cookies to remember your session preferences. We do not use cookies for advertising or tracking across other websites.</p>
 
       <h2>7. Data Security</h2>
-      <p>We take reasonable precautions to protect your information from unauthorized access. That said, no system is 100% secure. If you ever have a concern about how your data is being handled, contact us directly at <a href="tel:9209602133">920-960-2133</a>.</p>
+      <p>We take reasonable precautions to protect your information from unauthorized access. That said, no system is 100% secure. If you ever have a concern about how your data is being handled, contact us directly at <a href="tel:9209049964">920-904-9964</a>.</p>
 
       <h2>8. Your Rights</h2>
       <p>You can ask us at any time to:</p>
@@ -2276,7 +2334,7 @@
       <h2>11. Questions?</h2>
       <p>If you have questions about this policy or how we handle your information, contact us:</p>
       <ul>
-        <li>Phone or text: <a href="tel:9209602133">920-960-2133</a></li>
+        <li>Phone or text: <a href="tel:9209049964">920-904-9964</a></li>
         <li>Service area: Fond du Lac, Wisconsin &amp; the 60-mile region around it</li>
       </ul>
     </div>
@@ -2330,7 +2388,7 @@
         <h5>Get In Touch</h5>
         <div class="contact-row">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:9209602133">920-960-2133</a>
+          <a href="tel:9209049964">920-904-9964</a>
         </div>
         <div class="contact-row">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -2372,10 +2430,39 @@
     lastY = y;
   });
 
-  // Mobile menu placeholder
-  document.querySelector('.menu-toggle')?.addEventListener('click', () => {
-    alert('Mobile menu — wire up to nav drawer at dev handoff.');
-  });
+  // Mobile menu drawer + Services dropdown
+  (function () {
+    var header = document.querySelector('header.site');
+    var toggle = document.querySelector('.menu-toggle');
+    var nav = header && header.querySelector('nav.primary');
+    if (!header || !toggle || !nav) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    function setOpen(open) {
+      header.classList.toggle('nav-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Close' : 'Menu';
+      if (!open) nav.querySelectorAll('.nav-item.open').forEach(function (i) { i.classList.remove('open'); });
+    }
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      setOpen(!header.classList.contains('nav-open'));
+    });
+    // Services dropdown: expand inside the mobile drawer, navigate on desktop
+    nav.querySelectorAll('.nav-item.has-dropdown > .nav-top').forEach(function (top) {
+      top.addEventListener('click', function (e) {
+        if (window.matchMedia('(max-width: 960px)').matches) {
+          e.preventDefault();
+          top.parentNode.classList.toggle('open');
+        }
+      });
+    });
+    // Close the drawer when a real navigation link is tapped (not the dropdown toggle)
+    nav.querySelectorAll('a').forEach(function (a) {
+      if (a.classList.contains('nav-top')) return;
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  })();
 
   // FAQ accordion — used on water heater page, FAQ page, and any other page with .faq-q buttons
   document.querySelectorAll('.faq-q').forEach((btn) => {
@@ -2386,5 +2473,7 @@
   });
 </script>
 
+  <!-- LeadConnector Chat Widget -->
+  <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a7646a94aeeffcf75aaf487"></script>
 </body>
 </html>
